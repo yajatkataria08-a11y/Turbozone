@@ -1,5 +1,5 @@
 """Serving side of the pipeline.md pipeline: load the (version 4) bundle exported by
-training/ncmapss_colab_training.ipynb and run it on per-flight engine data.
+training/4am 0.9  file .ipynb and run it on per-flight engine data.
 
     healthy baseline -> residuals -> EKF (states, uncertainty, innovations) -> causal features
     -> Random Forest / XGBoost / LightGBM / CatBoost -> scaler + Ridge -> RUL (+ empirical interval)
@@ -86,7 +86,7 @@ class ModelBundle:
             man = _finite(json.load(fh))
         if man.get("version") != BUNDLE_VERSION:
             raise ValueError(f"Unsupported bundle version {man.get('version')} (expected {BUNDLE_VERSION}): retrain with "
-                             "training/ncmapss_colab_training.ipynb")
+                             "training/4am 0.9  file .ipynb")
 
         def js(name):
             with open(os.path.join(model_dir, man[name]), encoding="utf-8") as fh:

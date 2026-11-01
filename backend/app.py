@@ -62,7 +62,7 @@ def get_bundle() -> ModelBundle:
                 STATE.error = f"{type(exc).__name__}: {exc}"
     if STATE.bundle is None:
         raise HTTPException(503, f"No model bundle loaded ({STATE.error}). Train with "
-                                 "training/ncmapss_colab_training.ipynb and unzip the bundle into backend/models/.")
+                                 "training/4am 0.9  file .ipynb and unzip the bundle into backend/models/.")
     return STATE.bundle
 
 

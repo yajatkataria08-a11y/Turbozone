@@ -27,26 +27,22 @@ Filter, and explains every prediction.
    the dashboard (`public/`).
 
 ## Running
-1. Train on Google Colab (a CPU runtime is enough): open `training/ncmapss_colab_training.ipynb`, run all cells
-   (`RUN="quick"` for DS02, ~15–25 min; `RUN="full"` for 9 files (DS08d excluded), ~65–110 min; estimates). The script downloads the
-   data from Kaggle; a Drive cache makes re-runs fast. It downloads a bundle zip.
-2. Unzip the bundle into `backend/models/`.
+1. View or run the Colab training notebook: `training/4am 0.9  file .ipynb`.
+2. The final bundle (`training/final bundle 4am/`) is deployed in `backend/models/`.
 3. `pip install -r backend/requirements.txt`, then `python -m backend` and open http://localhost:8000.
-4. Check: `python -m backend.check_parity` (must print `PARITY OK`).
+4. Check: `python -m backend.check_parity` (prints `PARITY OK`).
 
-No bundle is installed right now: the previous one came from the old (pre-`pipeline.md`) pipeline and is kept only in
-`docs/genzone_ncmapss_full_bundle/`. Until the new notebook is run, the dashboard shows "No trained model bundle loaded".
+The final 9-subset model bundle is installed in `backend/models/` (evaluated on 39 test engines with test RUL RMSE 6.97) and verified by parity checks.
 
 ## Repository layout
 | Path | Content |
 |---|---|
-| `training/` | Colab training notebook + its source script, notebook builder, **training guide** |
+| `training/` | Final Colab training notebook (`4am 0.9  file .ipynb`), output bundle (`final bundle 4am`), and **training guide** |
 | `backend/pipeline/ncmapss.py`, `stacking.py` | shared pipeline code (used by training and serving) |
 | `backend/` | FastAPI service, bundle loader, parity check, tests |
 | `backend/models/` | the trained model bundle served by the dashboard |
 | `public/` | dashboard: `index.html` + `app.js` + `app.css` (fleet queue, RUL, gas-path health, physics, explanations, maintenance log); the previous 3D dashboard is kept at `legacy.html` |
-| `docs/` | project documents, reference papers, the old pipeline's bundle (reference only) |
+| `docs/` | project documents, reference papers, specifications, and presentation slide decks |
 | `pipeline.md` | the specification this project implements |
 
-Details, limits and API: `backend/README.md`. The notebook is generated from `training/ncmapss_colab_training.py`
-(`python training/build_notebook.py`) so it always contains the same pipeline code as the backend.
+Details, limits and API: `backend/README.md`.

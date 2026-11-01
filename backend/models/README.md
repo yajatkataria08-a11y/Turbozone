@@ -1,11 +1,9 @@
-# Model bundle (put the unzipped Colab export here)
+# Model bundle (deployed models)
 
-`training/ncmapss_colab_training.ipynb` produces `genzone_ncmapss_<run>_bundle.zip`. Unzip it **into this folder**
-(so `backend/models/manifest.json` exists) and restart the backend. Then run `python -m backend.check_parity` once:
-it re-computes the bundled test engines and compares them with the notebook's own predictions.
+This directory contains the final deployed model bundle (`training/final bundle 4am`) produced by the training
+notebook `training/4am 0.9  file .ipynb`. Run `python -m backend.check_parity` to verify parity with the notebook predictions.
 
-Only version-4 bundles (pipeline.md pipeline) load. The previous pipeline's bundle is kept for reference in
-`docs/genzone_ncmapss_full_bundle/` and is not loadable by the current backend.
+Only version-4 bundles (`pipeline.md` pipeline) load.
 
 ## Files
 

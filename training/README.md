@@ -22,17 +22,16 @@ N-CMAPSS HDF5 -> schema inspection + validation -> flight-end aggregation -> eng
 
 ## Quick start
 
-1. Open [`ncmapss_colab_training.ipynb`](ncmapss_colab_training.ipynb) in Google Colab (a **CPU** runtime is enough).
-2. Configuration cell: `RUN = "quick"` for the first run (DS02 only), later `RUN = "full"` (9 files; DS08d excluded).
+1. Open [`4am 0.9  file .ipynb`](4am%200.9%20%20file%20.ipynb) in Google Colab (or view the executed run).
+2. Configuration cell: `RUN = "quick"` for DS02 only, `RUN = "full"` for the full 9 files (DS08d excluded).
 3. **Run all** and accept the Google Drive prompt (the aggregate cache lives in `MyDrive/genzone/`).
-4. When it finishes, `genzone_ncmapss_<RUN>_bundle.zip` downloads (a copy is saved in `MyDrive/genzone/`).
-5. Unzip it into `backend/models/`, then:
+4. When it finishes, the model bundle downloads (`final bundle 4am`).
+5. The bundle is installed in `backend/models/`:
    ```bash
    python -m backend.check_parity      # must print PARITY OK
    python -m backend                   # dashboard at http://localhost:8000
    ```
-   `backend/models/` currently holds the first quick-run bundle (DS02 test engines 1011, 1014, 1015); the old pipeline's
-   bundle is kept only in `docs/genzone_ncmapss_full_bundle/` for reference.
+   `backend/models/` currently holds the final 9-subset bundle (`final bundle 4am`, 39 test engines, test RUL RMSE 6.97) which passes parity checks with the notebook.
 
 ## 1. Dataset: NASA N-CMAPSS
 
@@ -72,15 +71,11 @@ There is no `DS08b`. Inside each file (`dev` = development engines, `test` = NAS
 
 | File | Role |
 |---|---|
-| [`ncmapss_colab_training.py`](ncmapss_colab_training.py) | **Source of truth**: the training code as `# %%` cells. Edit this. |
-| [`ncmapss_colab_training.ipynb`](ncmapss_colab_training.ipynb) | Generated notebook for Colab. Never edit by hand. |
-| [`build_notebook.py`](build_notebook.py) | `python training/build_notebook.py`: inlines the shared modules into the `[pipeline:…]` cells and stamps the build (git commit + code hash). |
+| [`4am 0.9  file .ipynb`](4am%200.9%20%20file%20.ipynb) | **Final training notebook**: the complete training run and evaluations on Google Colab. |
+| [`final bundle 4am/`](final%20bundle%204am) | Exported final model bundle containing all model weights, scalers, metadata, and test outputs. |
 | [`../backend/pipeline/ncmapss.py`](../backend/pipeline/ncmapss.py) | Shared: ingestion, schema validation, aggregation, healthy baseline, EKF, features, leakage audit. |
 | [`../backend/pipeline/stacking.py`](../backend/pipeline/stacking.py) | Shared: four base models, tuning, engine splits/folds, OOF stacking, Ridge, metrics, interval. |
-
-**Changing the code:** edit the `.py` file(s) → `python -m pytest backend/tests` → `python training/build_notebook.py` →
-commit the `.py` and the `.ipynb` together. If you change `load_h5` / `aggregate_cycles`, bump `AGG_VERSION` in
-`ncmapss.py` (this invalidates the Drive cache).
+| [`../backend/models/`](../backend/models) | Active model directory deployed to the dashboard backend. |
 
 ## 3. Running on Colab
 
